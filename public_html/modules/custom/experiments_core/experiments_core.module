@@ -1,0 +1,107 @@
+<?php
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+
+function experiments_core_form_menu_link_content_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+
+
+  /** @var \Drupal\menu_link_content\MenuLinkContentInterface $menu_link_content */
+  $menu_link_content = $form_state->getFormObject()->getEntity();
+
+
+  $menu_link = $form_state->getFormObject()->getEntity();
+  $menu_link_options = $menu_link->link ? $menu_link->link->first()->options : [];
+
+//  $menu_link_options['link_setup']['classes'] = 'class';
+
+
+  $form['options']['link_setup'] = [
+    '#type' => 'details',
+    '#title' => t('Link setup'),
+    '#weight' => -3,
+    '#tree' => TRUE,
+  ];
+
+  $form['options']['link_setup']['classes'] = [
+    '#type' => 'textfield',
+    '#title' => t('CSS classes '),
+    '#description' => t('текст 123.'),
+    '#default_value' => isset($menu_link_options['link_setup']['classes']) ? $menu_link_options['link_setup']['classes'] : '',
+    '#weight' => 30,
+  ];
+
+
+  $color_link = [1 => 'black', 2 => 'red', 3 => 'green'];
+
+  $form['options']['link_setup']['color_classes'] = [
+    '#type' => 'select',
+    '#title' => t('Выберите цвет ссылки'),
+    '#options' => $color_link,
+    '#empty_option' => t('- Select -'),
+    '#default_value' => isset($menu_link_options['link_setup']['color_classes']) ? $menu_link_options['link_setup']['color_classes'] : '',
+    '#required' => TRUE,
+  ];
+
+
+  $form['actions']['submit']['#submit'][] = '_experiments_core_form_menu_link_content_form_submit';
+
+}
+
+function _experiments_core_form_menu_link_content_form_submit(array &$form, FormStateInterface $form_state){
+
+  /** @var \Drupal\menu_link_content\Form\MenuLinkContentForm $form_object */
+  $form_object = $form_state->getFormObject();
+  $menu_link = $form_object->getEntity();
+
+  if (!$menu_link->link || $menu_link->link->isEmpty()) {
+    return;
+  }
+
+    $menu_link_options = $menu_link->link->first()->options ?: [];
+    $menu_link_attributes = ['link_setup' => $form_state->getValue('link_setup')];
+    $menuLinkEntity = $form_state->getBuildInfo()['callback_object']->getEntity();
+
+    $options = array_merge($menu_link_options, $menu_link_attributes);
+
+    $menuLinkEntity->link->first()->options = $options;
+    $menuLinkEntity->save();
+}
+
+
+/**
+ * @param $variables
+ */
+function experiments_core_preprocess_menu(&$variables)
+{
+  if($variables['menu_name'] === 'main'){
+
+    foreach ($variables['items'] as $item) {
+      $options = $item['original_link']->getOptions();
+
+      if ($options && isset($options['link_setup']['classes'])) {
+        $classes_array = explode(' ', $options['link_setup']['classes']);
+        foreach ($classes_array as $class) {
+          // add classes to class attribute
+          $item['attributes']->addClass(Html::cleanCssIdentifier($class, []));
+        }
+      }
+
+      if ($options && isset($options['link_setup']['color_classes'])) {
+        $classes_array = explode(' ', $options['link_setup']['color_classes']);
+
+        $color_link = [1 => 'black', 2 => 'red', 3 => 'green'];
+
+        foreach ($classes_array as $class) {
+          $item['attributes']->addClass(Html::cleanCssIdentifier($color_link[$class], []));
+        }
+      }
+
+
+    }
+  }
+}

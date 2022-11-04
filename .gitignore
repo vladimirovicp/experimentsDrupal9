@@ -1,0 +1,40 @@
+/vendor/
+
+public_html/core
+public_html/libraries
+public_html/modules/contrib/
+public_html/themes/contrib/
+
+public_html/sites/default/files/css
+public_html/sites/default/files/js
+public_html/sites/default/files/languages
+public_html/sites/default/files/php
+public_html/sites/default/files/translations
+
+drush/Commands/contrib/
+/tmp/
+.idea
+
+# Ignore configuration files that may contain sensitive information.
+# public_html/sites/*/settings*.php
+# public_html/sites/*/services*.yml
+
+# Ignore paths that contain user-generated content.
+#public_html/sites/*/files
+#public_html/sites/*/private
+
+# Ignore SimpleTest multi-site environment.
+sites/simpletest
+
+# If you prefer to store your .gitignore file in the sites/ folder, comment
+# or delete the previous settings and uncomment the following ones, instead.
+
+# Ignore configuration files that may contain sensitive information.
+# */settings*.php
+
+# Ignore paths that contain user-generated content.
+# */files/
+# */private
+
+# Ignore SimpleTest multi-site environment.
+# simpletest

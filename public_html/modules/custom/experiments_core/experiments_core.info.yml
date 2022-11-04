@@ -1,0 +1,8 @@
+#experiments_core
+name: Experiments core
+type: module
+description: 'Experiments core'
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:menu_link_content
+package: Experiments

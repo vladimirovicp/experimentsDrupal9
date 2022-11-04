@@ -1,0 +1,10 @@
+uuid: 8f27ecc6-b8ef-487a-a4a6-1d7affea2d76
+langcode: ru
+status: true
+dependencies:
+  module:
+    - path_alias
+id: path_alias.token
+label: Токен
+targetEntityType: path_alias
+cache: true
