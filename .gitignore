@@ -15,6 +15,12 @@ drush/Commands/contrib/
 /tmp/
 .idea
 
+.DS_Store
+private/.DS_Store
+public_html/.DS_Store
+public_html/sites/.DS_Store
+
+
 # Ignore configuration files that may contain sensitive information.
 # public_html/sites/*/settings*.php
 # public_html/sites/*/services*.yml

@@ -1,10 +1,8 @@
 <?php
 
  $settings['trusted_host_patterns'] = [
-    '^example\.com$',
-    '^.+\.example\.com$',
-    '^example\.org$',
-    '^.+\.example\.org$',
+    '^experimentsdrupal\.local$',
+    '^.+\.eexperimentsdrupal\.local$',
  ];
 
 $databases['default']['default'] = array(
