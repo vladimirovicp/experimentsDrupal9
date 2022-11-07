@@ -1,4 +1,4 @@
-ssu_schedule.schedule:
+ssu_schedule.schedule_page:
   path: '/schedule'
   defaults:
     _controller:  Drupal\ssu_schedule\Controller\ScheduleController::ssu_schedule
