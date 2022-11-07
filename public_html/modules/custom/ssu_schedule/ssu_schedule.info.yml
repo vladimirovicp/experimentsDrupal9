@@ -1,0 +1,5 @@
+name: Schedule
+type: module
+description: 'Schedule Расписание занятий'
+package: Experiments
+core_version_requirement: ^8 || ^9

@@ -1,0 +1,146 @@
+<?php
+
+/**
+ * @return mixed
+ * Implements hook_schema()
+ */
+function ssu_schedule_schema() {
+
+  $schema['ssu_schedule'] = array(
+    'description' => 'ssu schedule',
+    'fields' => array(
+
+      'id_schedule' => array(
+      'description' => 'ID',
+      'type' => 'serial',
+      'unsigned' => TRUE,
+      'not null' => TRUE,
+      ),
+
+      'day_of_week' => array(
+        'description' => 'День недели',
+        'type' => 'int',
+        'size' => 'small',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => null,
+      ),
+      'state' => array(
+        'description' => 'Состояние:1-всегда, 2-числитель, 3-знаменатель',
+        'type' => 'int',
+        'size' => 'small',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'description' => array(
+        'description' => 'Описание подгруппы',
+        'type' => 'varchar',
+        'length' => 255,
+        'default' => NULL,
+      ),
+      'place' => array(
+        'description' => 'Место проведения занятия',
+        'type' => 'varchar',
+        'length' => 100,
+        'default' => NULL,
+      ),
+      'id_teacher' => array(
+        'description' => 'Преподаватель',
+        'type' => 'int',
+        'size' => 'small',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'id_discipline' => array(
+        'description' => 'Дисциплина',
+        'type' => 'int',
+        'length' => 11,
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'id_type_grid' => array(
+        'description' => 'Соответствующий тип сетки расписания',
+        'type' => 'int',
+        'length' => 11,
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'lesson' => array(
+        'description' => 'Порядковый номер пары',
+        'type' => 'int',
+        'size' => 'small',
+        'not null' => TRUE,
+      ),
+      'id_group' => array(
+        'description' => 'Группа',
+        'type' => 'int',
+        'length' => 11,
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'type' => array(
+        'description' => '0-лекция, 1-практика, 2-лабораторная работа',
+        'type' => 'int',
+        'length' => 1,
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'date_event' => array(
+        'description' => 'Timestamp',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'id_archive' => array(
+        'description' => 'либо 0 - не заархивирован,либо id архива',
+        'type' => 'int',
+        'length' => 11,
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'published' => array(
+        'description' => '',
+        'type' => 'int',
+        'length' => 1,
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => 1,
+      ),
+      'update' => array(
+        'description' => 'Дата последнего обновления',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'date_begin' => array(
+        'description' => 'Дата начала пары',
+        'type' => 'varchar',
+        'mysql_type' => 'date',
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'date_end' => array(
+        'description' => 'Дата окончания пары',
+        'type' => 'varchar',
+        'mysql_type' => 'date',
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+
+
+    ),
+    'primary key' => array('id_schedule'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ssu_schedule_uninstall() {
+  # Remove table
+  \Drupal::state()->delete('ssu_schedule.ssu_schedule');
+}

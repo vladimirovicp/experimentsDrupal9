@@ -1,0 +1,8 @@
+ssu_schedule.schedule:
+  path: '/schedule'
+  defaults:
+#   _controller:  Drupal\ssu_schedule\Controller\ScheduleController::ssu_schedule
+    _controller: Drupal\ssu_schedule\Controller\HelloWorldController::helloWorld
+    _title: 'Schedule'
+  requirements:
+    _permission: 'access content'
