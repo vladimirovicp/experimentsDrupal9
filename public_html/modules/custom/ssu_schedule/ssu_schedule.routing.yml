@@ -5,4 +5,3 @@ ssu_schedule.schedule_page:
     _title: 'Schedule'
   requirements:
     _permission: 'access content'
-
