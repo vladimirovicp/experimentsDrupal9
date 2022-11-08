@@ -1,0 +1,5 @@
+name: example_csv_parse
+type: module
+description: 'example_csv_parse'
+core_version_requirement: ^8 || ^9
+package: Experiments

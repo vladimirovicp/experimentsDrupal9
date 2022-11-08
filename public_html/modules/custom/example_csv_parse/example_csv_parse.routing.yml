@@ -1,0 +1,8 @@
+example_csv_parse.example_csv_parse_page:
+  path: '/parse-csv-page'
+  defaults:
+    _controller: '\Drupal\example_csv_parse\Controller\PageParseCsvController::myPage'
+    _title: 'Parse csv'
+  requirements:
+    _permission: 'access content'
+
