@@ -1,0 +1,46 @@
+<?php
+
+  function bmcoder_schema(){
+
+    $schema['bmcoder_user'] = [
+      'fields' => [
+        'id' => [
+          'type' => 'serial',
+          'not null' => TRUE,
+        ],
+        'name' => [
+          'type' => 'varchar',
+          'length' => 255,
+        ],
+        'mobile' => [
+          'type' => 'varchar',
+          'length' => 15,
+        ],
+      ],
+      'primary key' => array('id'),
+    ];
+
+    return $schema;
+
+  }
+
+  function bmcoder_install(){
+    $rows = [
+      ['name' => 'brijest', 'mobile' => '9586979730'],
+      ['name' => 'ramesh', 'mobile' => '9586979730'],
+    ];
+
+    $db_connection = \Drupal::database();
+
+    if($db_connection->schema()->tableExists('bmcoder_user')){
+      foreach ($rows as $row){
+        $db_connection->insert('bmcoder_user')->fields($row)->execute();
+      }
+    }
+
+
+  }
+
+
+
+

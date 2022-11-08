@@ -1,0 +1,7 @@
+bmcoder.form_add:
+  path: '/bmcoder/add'
+  defaults:
+    _form: Drupal\bmcoder\Form\BmCoderExampleForm
+    _title: 'Example form bmcoder'
+  requirements:
+    _permission: 'access content'

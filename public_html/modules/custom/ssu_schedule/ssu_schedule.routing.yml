@@ -5,3 +5,11 @@ ssu_schedule.schedule_page:
     _title: 'Schedule'
   requirements:
     _permission: 'access content'
+
+#ssu_schedule.schedule_add:
+#  path: '/schedule'
+#  defaults:
+#    _controller:  Drupal\ssu_schedule\Controller\ScheduleAddController::ssu_schedule_add
+#    _title: 'Schedule Add'
+#  requirements:
+#    _permission: 'access content'

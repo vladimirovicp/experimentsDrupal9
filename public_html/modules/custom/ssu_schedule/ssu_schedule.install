@@ -86,9 +86,8 @@ function ssu_schedule_schema() {
         'not null' => FALSE,
       ),
       'date_event' => array(
-        'description' => 'Timestamp',
-        'type' => 'int',
-        'unsigned' => TRUE,
+        'type' => 'varchar',
+        'mysql_type' => 'datetime',
         'not null' => FALSE,
         'default' => NULL,
       ),
@@ -109,8 +108,8 @@ function ssu_schedule_schema() {
       ),
       'update' => array(
         'description' => 'Дата последнего обновления',
-        'type' => 'int',
-        'unsigned' => TRUE,
+        'type' => 'varchar',
+        'mysql_type' => 'datetime',
         'not null' => FALSE,
         'default' => NULL,
       ),
@@ -136,6 +135,44 @@ function ssu_schedule_schema() {
 
   return $schema;
 }
+
+
+function ssu_schedule_install(){
+
+  $rows = [
+    [
+    'id_schedule' => 698806,
+    'day_of_week' => NULL,
+    'state' => 1,
+    'description' => NULL,
+    'place' => '425 аудитория, 12 корпус',
+    'id_teacher' => 147,
+    'id_discipline' => 10765,
+    'id_type_grid' => 1,
+    'lesson' => 3,
+    'id_group' => 4080,
+    'type' => 5,
+    'date_event' => '2022-05-26 12:05:00',
+//    'id_archive' => 0,
+//    'published' => 1,
+//    'update' => '2022-05-08 17:36:19',
+//    'date_begin' => NULL,
+//    'date_en' => NULL,
+    ]
+  ];
+
+  $db_connection = \Drupal::database();
+
+  if($db_connection->schema()->tableExists('ssu_schedule')){
+    foreach ($rows as $row){
+      $db_connection->insert('ssu_schedule')->fields($row)->execute();
+    }
+  }
+
+
+}
+
+
 
 /**
  * Implements hook_uninstall().
