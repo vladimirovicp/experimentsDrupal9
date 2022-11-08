@@ -26,19 +26,19 @@ class DepartmentShowController extends ControllerBase {
 //    $query->orderBy('de.id_department', 'DESC');
 //    $query->range(0, 1);
 
-//    $output = \Drupal::database()
-//      ->select('ssu_department', 'n')
-//      ->fields('n', ['id_department', 'ssu_department'])
-////      ->condition('n.type', 'page') // <--
-////      ->condition('n.uid', 1) // <--
-//      ->execute()
-//      ->fetchAll();
+    $output = \Drupal::database()
+      ->select('ssu_department', 'n')
+      ->fields('n', ['id_department', 'department'])
+//      ->condition('n.type', 'page') // <--
+      ->condition('n.id_department', 3822)
+      ->execute()
+      ->fetchAll();
 
 
 
 
 
-//    dpm($output);
+   dpm($output);
 
 //      $query->orderBy('de.id_department', 'DESC');
 
