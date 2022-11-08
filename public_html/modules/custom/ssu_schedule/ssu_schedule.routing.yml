@@ -1,8 +1,8 @@
 ssu_schedule.schedule_page:
   path: '/schedule'
   defaults:
-    _controller:  Drupal\ssu_schedule\Controller\ScheduleController::ssu_schedule
-    _title: 'Schedule'
+    _controller:  Drupal\ssu_schedule\Controller\DepartmentShowController::department_show
+    _title: 'Расписание'
   requirements:
     _permission: 'access content'
 

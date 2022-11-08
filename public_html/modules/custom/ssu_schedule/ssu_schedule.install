@@ -133,6 +133,69 @@ function ssu_schedule_schema() {
     'primary key' => array('id_schedule'),
   );
 
+  $schema['ssu_department'] = array(
+    'description' => 'ssu department',
+    'fields' => array(
+      'id_department' => array(
+        'description' => 'ID',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'department' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 150,
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'short_name' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 40,
+      ),
+      'alias' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 10,
+      ),
+      'id_type_grid' => array(
+        'description' => '',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'id_type' => array(
+        'description' => '',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+      ),
+//      'pid_department' => array(
+//        'description' => '',
+//        'type' => 'int',
+//        'length' => 11,
+//        'not null' => FALSE,
+//        'default' => NULL,
+//      ),
+      'pid_department' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 11,
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'section' => array(
+        'description' => '',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id_department'),
+  );
+
   return $schema;
 }
 
@@ -157,18 +220,47 @@ function ssu_schedule_install(){
 //    'published' => 1,
 //    'update' => '2022-05-08 17:36:19',
 //    'date_begin' => NULL,
-//    'date_en' => NULL,
+//    'date_end' => NULL,
     ]
   ];
 
   $db_connection = \Drupal::database();
-
   if($db_connection->schema()->tableExists('ssu_schedule')){
     foreach ($rows as $row){
       $db_connection->insert('ssu_schedule')->fields($row)->execute();
     }
   }
 
+  $module_handler = \Drupal::service('module_handler');
+  $module_path = $module_handler->getModule('ssu_schedule')->getPath();
+  $array_department = $fields_department = [];
+  $i = 0;
+  $handle = @fopen($module_path . '/files/ssu_department.csv', "r");
+  if ($handle) {
+    while (($row = fgetcsv($handle, 4096)) !== FALSE) {
+      if (empty($fields_department)) {
+        $fields_department = $row;
+        continue;
+      }
+      foreach ($row as $k => $value) {
+        $array_department[$i][$fields_department[$k]] = $value;
+      }
+      $i++;
+    }
+    if (!feof($handle)) {
+      echo "Error: unexpected fgets() fail\n";
+    }
+    fclose($handle);
+  }
+
+
+  if (is_array($array_department) && count($array_department) > 0) {
+    if($db_connection->schema()->tableExists('ssu_department')){
+      foreach ($array_department as $row){
+        $db_connection->insert('ssu_department')->fields($row)->execute();
+      }
+    }
+  }
 
 }
 
