@@ -25,3 +25,19 @@ function ssu_schedule_help($route_name, RouteMatchInterface $route_match)
   }
   return NULL;
 }
+
+function ssu_schedule_theme() {
+  return [
+    'schedule_page' => [
+      'variables' => [
+        'faculties' => '',
+        'college' => '',
+      ],
+    ],
+    'test' => [
+      'variables' => [
+        'test1' => '',
+      ],
+    ],
+  ];
+}

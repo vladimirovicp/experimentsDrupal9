@@ -1,0 +1,17 @@
+<div class="schedule" >
+  <h3>Факультеты и институты</h3>
+  <ul>
+    {% for item in faculties %}
+{#      <li><a href='/schedule/{{ item.alias }}'>{{ item.department }}</a></li>#}
+      <li><a href='https://www.sgu.ru/schedule/{{ item.alias }}'>{{ item.department }}</a></li>
+    {% endfor %}
+    </ul>
+  <h3>Колледжи</h3>
+
+    <ul>
+    {% for item in college %}
+      {#      <li><a href='/schedule/{{ item.alias }}'>{{ item.department }}</a></li>#}
+      <li><a href='https://www.sgu.ru/schedule/{{ item.alias }}'>{{ item.department }}</a></li>
+    {% endfor %}
+    </ul>
+</div>

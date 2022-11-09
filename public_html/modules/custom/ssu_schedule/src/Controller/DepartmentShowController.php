@@ -12,51 +12,29 @@ class DepartmentShowController extends ControllerBase {
    */
 
   public function department_show() {
+    $query = \Drupal::database()->select('ssu_department', 'de');
+    $query->fields('de', array('id_department', 'department','short_name','alias','id_type_grid','section'));
+    $query->condition('de.section', 0);
+    $query->orderBy('de.department', 'ASC');
+    $faculties = $query->execute()->fetchAll();
 
-    # Выборка с сортировкой по полю
-
-//      $query = \Drupal::database()->select('ssu_department', 'nfd');
-//      $query->fields('nfd', array('id_department', 'ssu_department'));
-//      $query->condition('nfd.id_department', 1);
-//
-//      dpm($query);
-
-//    $query = \Drupal::database()->select('ssu_department', 'de');
-//    $query->fields('de', array('id_department', 'ssu_department'));
-//    $query->orderBy('de.id_department', 'DESC');
-//    $query->range(0, 1);
-
-    $output = \Drupal::database()
-      ->select('ssu_department', 'n')
-      ->fields('n', ['id_department', 'department'])
-//      ->condition('n.type', 'page') // <--
-      ->condition('n.id_department', 3822)
-      ->execute()
-      ->fetchAll();
+    $query = \Drupal::database()->select('ssu_department', 'de');
+    $query->fields('de', array('id_department', 'department','short_name','alias','id_type_grid','section'));
+    $query->condition('de.section', 3);
+    $query->orderBy('de.department', 'ASC');
+    $college = $query->execute()->fetchAll();
 
 
 
+//    return [
+//      '#markup' => $this->t('123456'),
+//    ];
 
-
-   dpm($output);
-
-//      $query->orderBy('de.id_department', 'DESC');
-
-
-//      $department = $query->execute()->fetchAll();
-//
-////    return $output;
-//
-//      dpm($department);
-
-
-//    return $mail;
-
-
-
-    return [
-      '#markup' => $this->t('123456'),
-    ];
+    return array(
+      '#theme' => 'schedule_page',
+      '#faculties' => $faculties,
+      '#college' => $college,
+    );
 
   }
 
