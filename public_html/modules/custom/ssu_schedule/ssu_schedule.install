@@ -196,6 +196,53 @@ function ssu_schedule_schema() {
     'primary key' => array('id_department'),
   );
 
+  $schema['ssu_group'] = array(
+    'description' => 'ssu group',
+    'fields' => array(
+      'id_group' => array(
+        'description' => 'ID',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'grp_type' => array(
+        'description' => 'Тип группы: -1 -- неведомый тип; 0 -- специалитет; 1 -- бакалавриат; 2 -- магистратура; 3 -- аспирантура',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'id_department' => array(
+        'description' => 'Факультет, институт',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+      ),
+      'number' => array(
+        'description' => 'Номер группы',
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+
+      'form_education' => array(
+        'description' => 'Формы обучения:0-дневная,1-заочная,2-вечерняя',
+        'type' => 'int',
+        'size' => 'small',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'number_rus' => array(
+        'description' => 'название группы на русском',
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id_group'),
+  );
+
   return $schema;
 }
 
@@ -224,6 +271,7 @@ function ssu_schedule_install(){
     ]
   ];
 
+
   $db_connection = \Drupal::database();
   if($db_connection->schema()->tableExists('ssu_schedule')){
     foreach ($rows as $row){
@@ -231,19 +279,63 @@ function ssu_schedule_install(){
     }
   }
 
+//  $db_connection = \Drupal::database();
+//  if($db_connection->schema()->tableExists('ssu_schedule')){
+//    foreach ($rows as $row){
+//      $db_connection->insert('ssu_schedule')->fields($row)->execute();
+//    }
+//  }
+//
+//  $module_handler = \Drupal::service('module_handler');
+//  $module_path = $module_handler->getModule('ssu_schedule')->getPath();
+//  $array_department = $fields_department = [];
+//  $i = 0;
+//  $handle = @fopen($module_path . '/files/ssu_department.csv', "r");
+//  if ($handle) {
+//    while (($row = fgetcsv($handle, 4096)) !== FALSE) {
+//      if (empty($fields_department)) {
+//        $fields_department = $row;
+//        continue;
+//      }
+//      foreach ($row as $k => $value) {
+//        $array_department[$i][$fields_department[$k]] = $value;
+//      }
+//      $i++;
+//    }
+//    if (!feof($handle)) {
+//      echo "Error: unexpected fgets() fail\n";
+//    }
+//    fclose($handle);
+//  }
+
+  $array_table = _ssu_schedule_parse_csv('ssu_department');
+  _ssu_schedule__install($db_connection,$array_table,'ssu_department');
+
+  $array_table = _ssu_schedule_parse_csv('ssu_group');
+  _ssu_schedule__install($db_connection,$array_table,'ssu_group');
+
+
+
+
+//  $name_file = 'ssu_department';
+//  $name_db = 'ssu_department';
+
+}
+
+function _ssu_schedule_parse_csv($name_file){
   $module_handler = \Drupal::service('module_handler');
   $module_path = $module_handler->getModule('ssu_schedule')->getPath();
-  $array_department = $fields_department = [];
+  $array_name = $fields_name = [];
   $i = 0;
-  $handle = @fopen($module_path . '/files/ssu_department.csv', "r");
+  $handle = @fopen($module_path . '/files/' . $name_file . '.csv', "r");
   if ($handle) {
     while (($row = fgetcsv($handle, 4096)) !== FALSE) {
-      if (empty($fields_department)) {
-        $fields_department = $row;
+      if (empty($fields_name)) {
+        $fields_name = $row;
         continue;
       }
       foreach ($row as $k => $value) {
-        $array_department[$i][$fields_department[$k]] = $value;
+        $array_name[$i][$fields_name[$k]] = $value;
       }
       $i++;
     }
@@ -253,18 +345,17 @@ function ssu_schedule_install(){
     fclose($handle);
   }
 
-
-  if (is_array($array_department) && count($array_department) > 0) {
-    if($db_connection->schema()->tableExists('ssu_department')){
-      foreach ($array_department as $row){
-        $db_connection->insert('ssu_department')->fields($row)->execute();
+  return $array_name;
+}
+function _ssu_schedule__install($db_connection,$array_table,$name_db){
+  if (is_array($array_table) && count($array_table) > 0) {
+    if($db_connection->schema()->tableExists($name_db)){
+      foreach ($array_table as $row){
+        $db_connection->insert($name_db)->fields($row)->execute();
       }
     }
   }
-
 }
-
-
 
 /**
  * Implements hook_uninstall().

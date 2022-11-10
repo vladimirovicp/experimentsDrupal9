@@ -24,12 +24,6 @@ class DepartmentShowController extends ControllerBase {
     $query->orderBy('de.department', 'ASC');
     $college = $query->execute()->fetchAll();
 
-
-
-//    return [
-//      '#markup' => $this->t('123456'),
-//    ];
-
     return array(
       '#theme' => 'schedule_page',
       '#faculties' => $faculties,

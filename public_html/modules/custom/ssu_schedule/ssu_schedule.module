@@ -34,9 +34,9 @@ function ssu_schedule_theme() {
         'college' => '',
       ],
     ],
-    'test' => [
+    'schedule_group' => [
       'variables' => [
-        'test1' => '',
+        'group' => '',
       ],
     ],
   ];

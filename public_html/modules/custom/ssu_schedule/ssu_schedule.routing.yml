@@ -6,6 +6,15 @@ ssu_schedule.schedule_page:
   requirements:
     _permission: 'access content'
 
+ssu_schedule.schedule_group_page:
+  path: '/schedule/{param}'
+  defaults:
+    _controller:  Drupal\ssu_schedule\Controller\GroupShowController::group_show
+#    _title: 'Расписание'
+    _title_callback: \Drupal\ssu_schedule\Controller\GroupShowController::titleCallback
+  requirements:
+    _permission: 'access content'
+
 #ssu_schedule.schedule_add:
 #  path: '/schedule'
 #  defaults:
