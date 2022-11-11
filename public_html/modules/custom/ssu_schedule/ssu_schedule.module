@@ -37,6 +37,7 @@ function ssu_schedule_theme() {
     'schedule_group' => [
       'variables' => [
         'group' => '',
+        'faculty' => '',
       ],
     ],
   ];

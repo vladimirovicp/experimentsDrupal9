@@ -1,24 +1,28 @@
 <div class="schedule" >
-
-
-
-
-{#  <fieldset class="do form_education form-wrapper">#}
-{#    <legend>#}
-{#      <span class="fieldset-legend">Дневная форма обучения</span>#}
-{#    </legend>#}
-{#  </fieldset>#}
-
-{#  <fieldset class="zo form_education form-wrapper">#}
-{#    <legend>#}
-{#      <span class="fieldset-legend">Заочная форма обучения</span>#}
-{#    </legend>#}
-{#  </fieldset>#}
-
-{#  <fieldset class="vo form_education form-wrapper">#}
-{#    <legend>#}
-{#      <span class="fieldset-legend">Вечерняя форма обучения</span>#}
-{#    </legend>#}
-{#  </fieldset>#}
-
+  {% for key,education in group %}
+    <fieldset class="{{education.alias}} form_education form-wrapper">
+      <legend>
+        <span class="fieldset-legend"> {{education.title}} </span>
+      </legend>
+      <div class="fieldset-wrapper">
+          {% for type in education.info %}
+              <fieldset class="group-type form-wrapper">
+                <legend>
+                  <span class="fieldset-legend">{{ type.title }}</span>
+                </legend>
+                <div class="fieldset-wrapper">
+                  {% for  course in type.info %}
+                    <legend><span class="fieldset-legend">{{ course.name }} курс:</span></legend>
+                    <div class="fieldset-wrapper">
+                      {% for group in course.group %}
+                        <a href="https://www.sgu.ru/schedule/{{ faculty }}/{{education.alias}}/{{ group }}">{{ group }}</a>
+                      {% endfor %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </fieldset>
+          {% endfor %}
+      </div>
+    </fieldset>
+  {% endfor %}
 </div>
