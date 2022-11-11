@@ -15,6 +15,8 @@ class GroupShowController extends ControllerBase {
 
   public function group_show($param) {
 
+
+
     $query = \Drupal::database()->select('ssu_department', 'd');
     $query->leftJoin('ssu_group', 'g', 'g.id_department = d.id_department');
     $query->fields('g', array('form_education', 'grp_type','number'));
@@ -84,6 +86,9 @@ class GroupShowController extends ControllerBase {
       );
       $response->send();
     }
+
+
+    $group_format = 0;
 
     return array(
       '#theme' => 'schedule_group',
