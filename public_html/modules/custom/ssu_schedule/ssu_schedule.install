@@ -243,6 +243,38 @@ function ssu_schedule_schema() {
     'primary key' => array('id_group'),
   );
 
+  $schema['ssu_schedule_grid'] = array(
+    'description' => 'ssu_schedule_grid',
+    'fields' => array(
+      'lesson' => array(
+        'description' => 'Порядковый номер пары	',
+        'type' => 'int',
+        'size' => 'small',
+        'not null' => TRUE,
+      ),
+      'begin' => array(
+        'description' => 'Время начала пары',
+        'type' => 'varchar',
+        'mysql_type' => 'time',
+        'not null' => TRUE,
+      ),
+      'end' => array(
+        'description' => 'Время окончания пары',
+        'type' => 'varchar',
+        'mysql_type' => 'time',
+        'not null' => TRUE,
+      ),
+
+      'id_type' => array(
+        'description' => 'Тип сетки расписания',
+        'type' => 'int',
+        'length' => 6,
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+    ),
+  );
+
   return $schema;
 }
 
@@ -314,7 +346,8 @@ function ssu_schedule_install(){
   $array_table = _ssu_schedule_parse_csv('ssu_group');
   _ssu_schedule__install($db_connection,$array_table,'ssu_group');
 
-
+  $array_table = _ssu_schedule_parse_csv('ssu_schedule_grid');
+  _ssu_schedule__install($db_connection,$array_table,'ssu_schedule_grid');
 
 
 //  $name_file = 'ssu_department';

@@ -15,10 +15,14 @@ ssu_schedule.schedule_group_page:
   requirements:
     _permission: 'access content'
 
-#ssu_schedule.schedule_add:
-#  path: '/schedule'
-#  defaults:
-#    _controller:  Drupal\ssu_schedule\Controller\ScheduleAddController::ssu_schedule_add
-#    _title: 'Schedule Add'
-#  requirements:
-#    _permission: 'access content'
+
+
+
+ssu_schedule.schedule_show_page:
+  path: '/schedule/{faculty}/{form_education}/{group}'
+  defaults:
+    _controller:  Drupal\ssu_schedule\Controller\ScheduleShowController::schedule_show
+    _title: 'Расписание'
+#    _title_callback: \Drupal\ssu_schedule\Controller\ScheduleShowController::titleCallback
+  requirements:
+    _permission: 'access content'

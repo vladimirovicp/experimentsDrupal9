@@ -26,6 +26,8 @@ class GroupShowController extends ControllerBase {
     $query -> orderBy('number','ASC');
     $group = $query->execute()->fetchAll();
 
+//    dpm($group);
+
     $education_count = '';
     $type_count = '';
     $course_count = '';
@@ -57,6 +59,7 @@ class GroupShowController extends ControllerBase {
 
 
     for ($i = 0; $i< count($group); $i++){
+
       if($group[$i]->form_education != $education_count){
         $education_count = $group[$i]->form_education;
         $group_format[$education_count]['title'] = $education_info[$education_count]['title'];
@@ -64,9 +67,18 @@ class GroupShowController extends ControllerBase {
         $type_count = '';
       }
 
+
       if($group[$i]->grp_type != $type_count){
         $type_count = $group[$i]->grp_type;
-        $group_format[$education_count]['info'][$type_count]['title'] = $education_info_type[$type_count];
+
+//        \Drupal::messenger()->addMessage('Сообщение не возможно отправить, отсутсвует toke или id_chat', 'error');
+
+        if( !isset($education_info_type[$type_count])){
+          \Drupal::messenger()->addMessage(['#markup' => 'Неверный grp_type! <br> grp_type = ' . $type_count] , 'error');
+        } else {
+          $group_format[$education_count]['info'][$type_count]['title'] = $education_info_type[$type_count];
+        }
+
 
       }
 
@@ -78,6 +90,7 @@ class GroupShowController extends ControllerBase {
       $group_format[$education_count]['info'][$type_count]['info'][$course_count]['group'][$group_count] = $group[$i]->number;
       $group_count++;
 
+
     }
 
     if (empty($group)){
@@ -86,9 +99,6 @@ class GroupShowController extends ControllerBase {
       );
       $response->send();
     }
-
-
-    $group_format = 0;
 
     return array(
       '#theme' => 'schedule_group',
@@ -100,7 +110,14 @@ class GroupShowController extends ControllerBase {
 
 
   public function titleCallback($param) {
-    return  $param;
+
+    $query = \Drupal::database()->select('ssu_department', 'd');
+    $query -> condition('d.alias', $param);
+    $query->fields('d', array('short_name'));
+    $group = $query->execute()->fetchAll();
+
+    return  $group[0]->short_name;
+
   }
 
 }

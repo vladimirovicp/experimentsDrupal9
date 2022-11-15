@@ -15,7 +15,7 @@
                     <legend><span class="fieldset-legend">{{ course.name }} курс:</span></legend>
                     <div class="fieldset-wrapper">
                       {% for group in course.group %}
-                        <a href="https://www.sgu.ru/schedule/{{ faculty }}/{{education.alias}}/{{ group }}">{{ group }}</a>
+                        <a href="/schedule/{{ faculty }}/{{education.alias}}/{{ group }}">{{ group }}</a>
                       {% endfor %}
                     </div>
                   {% endfor %}
