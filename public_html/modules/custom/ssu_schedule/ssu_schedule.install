@@ -9,7 +9,6 @@ function ssu_schedule_schema() {
   $schema['ssu_schedule'] = array(
     'description' => 'ssu schedule',
     'fields' => array(
-
       'id_schedule' => array(
       'description' => 'ID',
       'type' => 'serial',
@@ -21,9 +20,7 @@ function ssu_schedule_schema() {
         'description' => 'День недели',
         'type' => 'int',
         'size' => 'small',
-        'unsigned' => TRUE,
-        'not null' => FALSE,
-        'default' => null,
+        'default' => NULL,
       ),
       'state' => array(
         'description' => 'Состояние:1-всегда, 2-числитель, 3-знаменатель',
@@ -48,7 +45,6 @@ function ssu_schedule_schema() {
         'description' => 'Преподаватель',
         'type' => 'int',
         'size' => 'small',
-        'unsigned' => TRUE,
         'not null' => FALSE,
       ),
       'id_discipline' => array(
@@ -88,15 +84,14 @@ function ssu_schedule_schema() {
       'date_event' => array(
         'type' => 'varchar',
         'mysql_type' => 'datetime',
-        'not null' => FALSE,
         'default' => NULL,
       ),
       'id_archive' => array(
         'description' => 'либо 0 - не заархивирован,либо id архива',
         'type' => 'int',
         'length' => 11,
-        'unsigned' => TRUE,
         'not null' => FALSE,
+        'default' => 0,
       ),
       'published' => array(
         'description' => '',
@@ -110,29 +105,23 @@ function ssu_schedule_schema() {
         'description' => 'Дата последнего обновления',
         'type' => 'varchar',
         'mysql_type' => 'datetime',
-        'not null' => FALSE,
-        'default' => NULL,
+        'not null' => TRUE,
       ),
       'date_begin' => array(
         'description' => 'Дата начала пары',
         'type' => 'varchar',
         'mysql_type' => 'date',
-        'not null' => FALSE,
         'default' => NULL,
       ),
       'date_end' => array(
         'description' => 'Дата окончания пары',
         'type' => 'varchar',
         'mysql_type' => 'date',
-        'not null' => FALSE,
         'default' => NULL,
       ),
-
-
     ),
     'primary key' => array('id_schedule'),
   );
-
   $schema['ssu_department'] = array(
     'description' => 'ssu department',
     'fields' => array(
@@ -172,18 +161,10 @@ function ssu_schedule_schema() {
         'length' => 11,
         'not null' => TRUE,
       ),
-//      'pid_department' => array(
-//        'description' => '',
-//        'type' => 'int',
-//        'length' => 11,
-//        'not null' => FALSE,
-//        'default' => NULL,
-//      ),
       'pid_department' => array(
         'description' => '',
-        'type' => 'varchar',
+        'type' => 'int',
         'length' => 11,
-        'not null' => FALSE,
         'default' => NULL,
       ),
       'section' => array(
@@ -195,7 +176,6 @@ function ssu_schedule_schema() {
     ),
     'primary key' => array('id_department'),
   );
-
   $schema['ssu_group'] = array(
     'description' => 'ssu group',
     'fields' => array(
@@ -242,7 +222,6 @@ function ssu_schedule_schema() {
     ),
     'primary key' => array('id_group'),
   );
-
   $schema['ssu_schedule_grid'] = array(
     'description' => 'ssu_schedule_grid',
     'fields' => array(
@@ -274,80 +253,175 @@ function ssu_schedule_schema() {
       ),
     ),
   );
+  $schema['ssu_discipline'] = array(
+    'description' => 'ssu_discipline',
+    'fields' => array(
+
+      'id_discipline' => array(
+        'description' => 'ID',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+
+      'id_dep' => array(
+        'description' => '',
+        'type' => 'int',
+        'length' => '11',
+        'default' => NULL,
+      ),
+
+      'discipline' => array(
+        'description' => 'Название дисциплины	',
+        'type' => 'varchar',
+        'length' => 150,
+        'not null' => TRUE,
+      ),
+
+    ),
+    'primary key' => array('id_discipline'),
+  );
+  $schema['ssu_schedule_ident'] = array(
+    'description' => 'ssu schedule ident',
+    'fields' => array(
+      'iid' => array(
+        'description' => 'ID',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'nid' => array(
+        'description' => 'Teacher node id',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+      ),
+      'tid' => array(
+        'description' => 'Teachers schedule id	',
+        'type' => 'int',
+        'length' => 11,
+        'default' => NULL,
+      ),
+      'parent_iid' => array(
+        'description' => 'Parent record',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+    ),
+    'primary key' => array('iid'),
+  );
+  $schema['ssu_teacher'] = array(
+    'description' => 'ssu teacher',
+    'fields' => array(
+      'id_teacher' => array(
+        'description' => 'ID',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'surname' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 80,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 80,
+        'not null' => TRUE,
+      ),
+      'second_name' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 80,
+        'not null' => TRUE,
+      ),
+      'id_dep' => array(
+        'description' => '',
+//        'type' => 'int',
+//        'length' => 11,
+        'type' => 'varchar',
+        'length' => 11,
+        'default' => NULL,
+      ),
+    ),
+    'primary key' => array('id_teacher'),
+  );
+  $schema['ssu_schedule_archive'] = array(
+    'description' => 'ssu schedule archive',
+    'fields' => array(
+      'id_archive' => array(
+        'description' => '',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'archive' => array(
+        'description' => 'Название архива',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id_archive'),
+  );
+  $schema['ssu_schedule_event_type'] = array(
+    'description' => 'ssu schedule event type',
+    'fields' => array(
+      'id_type' => array(
+        'description' => '',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'type_full' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 25,
+        'not null' => TRUE,
+      ),
+      'type_short' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id_type'),
+  );
 
   return $schema;
 }
 
 
+/**
+ * @throws Exception
+ */
 function ssu_schedule_install(){
 
-  $rows = [
-    [
-    'id_schedule' => 698806,
-    'day_of_week' => NULL,
-    'state' => 1,
-    'description' => NULL,
-    'place' => '425 аудитория, 12 корпус',
-    'id_teacher' => 147,
-    'id_discipline' => 10765,
-    'id_type_grid' => 1,
-    'lesson' => 3,
-    'id_group' => 4080,
-    'type' => 5,
-    'date_event' => '2022-05-26 12:05:00',
-//    'id_archive' => 0,
-//    'published' => 1,
-//    'update' => '2022-05-08 17:36:19',
-//    'date_begin' => NULL,
-//    'date_end' => NULL,
-    ]
-  ];
-
-
   $db_connection = \Drupal::database();
-  if($db_connection->schema()->tableExists('ssu_schedule')){
-    foreach ($rows as $row){
-      $db_connection->insert('ssu_schedule')->fields($row)->execute();
-    }
+
+//  ssu_teacher //
+
+  $name_table_db = ['ssu_schedule','ssu_department','ssu_group','ssu_schedule_grid','ssu_discipline','ssu_schedule_ident','ssu_teacher','ssu_schedule_archive','ssu_schedule_event_type'];
+
+  for ($i=0; count($name_table_db)>$i; $i++){
+      $array_table = _ssu_schedule_parse_csv($name_table_db[$i]);
+      _ssu_schedule__install($db_connection,$array_table,$name_table_db[$i]);
   }
 
-//  $db_connection = \Drupal::database();
-//  if($db_connection->schema()->tableExists('ssu_schedule')){
-//    foreach ($rows as $row){
-//      $db_connection->insert('ssu_schedule')->fields($row)->execute();
-//    }
-//  }
+//  $array_table = _ssu_schedule_parse_csv('ssu_department');
+//  _ssu_schedule__install($db_connection,$array_table,'ssu_department');
 //
-//  $module_handler = \Drupal::service('module_handler');
-//  $module_path = $module_handler->getModule('ssu_schedule')->getPath();
-//  $array_department = $fields_department = [];
-//  $i = 0;
-//  $handle = @fopen($module_path . '/files/ssu_department.csv', "r");
-//  if ($handle) {
-//    while (($row = fgetcsv($handle, 4096)) !== FALSE) {
-//      if (empty($fields_department)) {
-//        $fields_department = $row;
-//        continue;
-//      }
-//      foreach ($row as $k => $value) {
-//        $array_department[$i][$fields_department[$k]] = $value;
-//      }
-//      $i++;
-//    }
-//    if (!feof($handle)) {
-//      echo "Error: unexpected fgets() fail\n";
-//    }
-//    fclose($handle);
-//  }
+//  $array_table = _ssu_schedule_parse_csv('ssu_group');
+//  _ssu_schedule__install($db_connection,$array_table,'ssu_group');
+//
+//  $array_table = _ssu_schedule_parse_csv('ssu_schedule_grid');
+//  _ssu_schedule__install($db_connection,$array_table,'ssu_schedule_grid');
+//
+//  $array_table = _ssu_schedule_parse_csv('ssu_discipline');
+//  _ssu_schedule__install($db_connection,$array_table,'ssu_discipline');
 
-  $array_table = _ssu_schedule_parse_csv('ssu_department');
-  _ssu_schedule__install($db_connection,$array_table,'ssu_department');
 
-  $array_table = _ssu_schedule_parse_csv('ssu_group');
-  _ssu_schedule__install($db_connection,$array_table,'ssu_group');
-
-  $array_table = _ssu_schedule_parse_csv('ssu_schedule_grid');
-  _ssu_schedule__install($db_connection,$array_table,'ssu_schedule_grid');
 
 
 //  $name_file = 'ssu_department';
@@ -368,6 +442,7 @@ function _ssu_schedule_parse_csv($name_file){
         continue;
       }
       foreach ($row as $k => $value) {
+        if($value == 'NULL'){$value=NULL;}
         $array_name[$i][$fields_name[$k]] = $value;
       }
       $i++;
@@ -385,6 +460,8 @@ function _ssu_schedule__install($db_connection,$array_table,$name_db){
     if($db_connection->schema()->tableExists($name_db)){
       foreach ($array_table as $row){
         $db_connection->insert($name_db)->fields($row)->execute();
+        //insert('mytable')->fields(['title', 'uid', 'created']);
+        //->isNull
       }
     }
   }

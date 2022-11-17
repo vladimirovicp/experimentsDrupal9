@@ -14,16 +14,16 @@ class PageParseCsvController extends ControllerBase {
 
   public function myPage() {
 
-    dpm('123');
+//    dpm('123');
 
     $module_handler = \Drupal::service('module_handler');
     $module_path = $module_handler->getModule('example_csv_parse')->getPath();
 
-    dpm($module_path);
+//    dpm($module_path);
     $array = $fields = [];
     $i = 0;
 //    $handle = @fopen($module_path . '/files/countries.csv', "r");
-    $handle = @fopen($module_path . '/files/ssu_department.csv', "r");
+    $handle = @fopen($module_path . '/files/ssu_schedule.csv', "r");
 
 
 
@@ -35,6 +35,7 @@ class PageParseCsvController extends ControllerBase {
           continue;
         }
         foreach ($row as $k => $value) {
+          if($value == 'NULL'){$value=NULL;}
           $array[$i][$fields[$k]] = $value;
         }
         $i++;
@@ -47,7 +48,8 @@ class PageParseCsvController extends ControllerBase {
 
     if (is_array($array) && count($array) > 0) {
 
-      dpm($array);
+//      dpm($array);
+      dpm(gettype($array[0]['day_of_week']));
 
 //      foreach ($array as $city) {
 //        $new_city = CityList::create([

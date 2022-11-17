@@ -8,6 +8,13 @@
           'type' => 'serial',
           'not null' => TRUE,
         ],
+        'nid' => array(
+          'description' => 'node id',
+          'type' => 'int',
+          'length' => 11,
+          'not null' => FALSE,
+          'default' => NULL,
+        ),
         'name' => [
           'type' => 'varchar',
           'length' => 255,
@@ -26,7 +33,7 @@
 
   function bmcoder_install(){
     $rows = [
-      ['name' => 'brijest', 'mobile' => '9586979730'],
+      ['nid' => NULL,'name' => 'brijest', 'mobile' => '9586979730'],
       ['name' => 'ramesh', 'mobile' => '9586979730'],
     ];
 
