@@ -1,0 +1,106 @@
+{#schedule-table.html.twig#}
+
+<div class="schedule" >
+  <table id='schedule'>
+    <tbody>
+    <tr>
+      <th></th>
+      {% for value in dayOfWeek %}
+        <th>{{ value }}</th>
+      {% endfor %}
+    <tr>
+
+      {% for gr in grid %}
+    <tr>
+      <th>
+        {{ gr.begin|slice(0, 5) }}
+        <br>
+        {{ gr.end|slice(0, 5) }}
+      </th>
+
+      {% for i in 1..6 %}
+
+        <td>
+
+{#          {{ i }}#}
+{#          {% if cell.update is empty %}#}
+{#            {% set t = 0 %}#}
+{#          {% else %}#}
+{#            {% set t = cell.update %}#}
+{#          {% endif %}#}
+
+                {% for cell in cells %}
+
+                  {% if gr.lesson == cell.lesson and i == cell.dow %}
+                    <div class='l l--t-{{ cell.lesson_type }}  l--r-{{cell.state}} l--g-'>
+
+{#                    {{ cell.discipline }}#}
+
+                    <div class='l-pr'>
+                      {# Чётность #}
+                      <div class='l-pr-r'>
+                        {% if  cell.state == 2 %}
+                            {{ 'чис.' }}
+                        {% elseif cell.state == 3 %}
+                          {{ 'знам.' }}
+                        {% endif %}
+                      </div>
+                      {# Тип #}
+                      <div class='l-pr-t'>
+                        {{ types[cell.lesson_type] }}
+                      </div>
+
+                      {#Другое#}
+                      <div class='l-pr-g'>
+                        {{  cell.description }}
+                      </div>
+
+                    </div>
+
+                    <div class='l-dn'>
+                      {{  cell.discipline }}
+                    </div>
+                    {% if cell.teacher_nid is empty %}
+                      <div class='l-tn'>{{ cell.teacher }}</div>
+                    {% else %}
+                      <div class='l-tn'>
+                        <a href="https://www.sgu.ru/node/{{ cell.teacher_nid }}" target="_blank"> {{ cell.teacher }}</a>
+                      </div>
+                    {% endif %}
+
+                    <div class='l-p'>
+                      {{ cell.place }}
+                    </div>
+                      {% if cell.date_begin != 'null' and cell.date_end != 'null' %}
+                        <div class="l-d">
+                          {{ cell.date_begin }} &nbsp;&ndash;&nbsp; {{ cell.date_end }}
+                        </div>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+
+
+
+{#                <td id='{{ cell.lesson }}_'>#}
+{#                  0#}
+{#                </td>#}
+                {% endfor %}
+
+        </td>
+
+
+
+      {% endfor %}
+
+    </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+  Ура2!
+
+{#  {{ types[2] }}#}
+
+{#  {{ kint(types) }}#}
+</div>

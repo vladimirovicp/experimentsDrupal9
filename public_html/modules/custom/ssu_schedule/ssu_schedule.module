@@ -40,5 +40,13 @@ function ssu_schedule_theme() {
         'faculty' => '',
       ],
     ],
+    'schedule_table' => [
+      'variables' => [
+        'dayOfWeek' => '',
+        'grid' => '',
+        'cells' => '',
+        'types' => '',
+      ],
+    ]
   ];
 }
