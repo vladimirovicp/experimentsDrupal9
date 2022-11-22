@@ -1,5 +1,3 @@
-{#schedule-table.html.twig#}
-
 <div class="schedule" >
   <table id='schedule'>
     <tbody>
@@ -30,12 +28,9 @@
 {#          {% endif %}#}
 
                 {% for cell in cells %}
-
                   {% if gr.lesson == cell.lesson and i == cell.dow %}
+
                     <div class='l l--t-{{ cell.lesson_type }}  l--r-{{cell.state}} l--g-'>
-
-{#                    {{ cell.discipline }}#}
-
                     <div class='l-pr'>
                       {# Чётность #}
                       <div class='l-pr-r'>
@@ -78,29 +73,11 @@
                       {% endif %}
                     </div>
                   {% endif %}
-
-
-
-{#                <td id='{{ cell.lesson }}_'>#}
-{#                  0#}
-{#                </td>#}
                 {% endfor %}
-
         </td>
-
-
-
       {% endfor %}
-
     </tr>
-
       {% endfor %}
-
     </tbody>
   </table>
-  Ура2!
-
-{#  {{ types[2] }}#}
-
-{#  {{ kint(types) }}#}
 </div>
